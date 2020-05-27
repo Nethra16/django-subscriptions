@@ -24,7 +24,10 @@ def as_date(dt):
 
 class SubscriptionManager(models.Manager):
     def add_subscription(self, start, end, reference):
-        return self.create(state=State.ACTIVE, start=start, end=end, reference=reference)
+        # Changing default state from State.ACTIVE to State.TRIAL_SCHEDULED
+        # start will be trial start date and end is going to be the number of days the trial will last
+        # could be 0, 7 or 14
+        return self.create(state=State.TRIAL_SCHEDULED, start=start, end=end, reference=reference)
 
     def trigger_renewals(self):
         """
@@ -80,6 +83,12 @@ class SubscriptionManager(models.Manager):
             count += 1
         return count
 
+    def trigger_trial_scheduled(self):
+        """
+        Finds all the subscriptions that are scheduled to be trialed and 
+        """
+        pass
+
     def trigger_stuck(self, timeout_hours=2):
         """
         Finds all subscriptions that begun the renewal process but did not complete, and moves them
@@ -94,6 +103,8 @@ class SubscriptionManager(models.Manager):
             subscription.state_unknown()
             count += 1
         return count
+    
+    
 
 
 class SubscriptionQuerySet(models.QuerySet):

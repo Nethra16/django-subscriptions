@@ -51,3 +51,7 @@ def trigger_stuck(hours=2):
     count = Subscription.objects.trigger_stuck(timeout_hours=hours)
     log.info("Trigger [%s] updated [%d] records", "stuck", count)
     return count
+
+@shared_task(acks_late=True)
+def trigger_trial_scheduled():
+    pass

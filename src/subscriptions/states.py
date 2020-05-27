@@ -10,6 +10,9 @@ class SubscriptionState(IntEnum):
     RENEWING = 3
     SUSPENDED = 4
     ENDED = 5
+    TRIAL_SCHEDULED = 6
+    TRIAL_ACTIVE = 7
+    TRIAL_ENDED = 8
     ERROR = -1
 
     @classmethod
